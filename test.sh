@@ -1,0 +1,1 @@
+./pipex infile "cat" "wc -l" outfile

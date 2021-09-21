@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/21 15:26:50 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/21 17:16:24 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ OBJ		= $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 LIB		=	
 
 HEADERS =	pipex.h
+
 SRCS	=	main.c \
 			ft_strlen.c \
 			ft_strlcat.c \
@@ -86,11 +87,11 @@ show	:
 # ----------------- #
 
 clean:
-			@rm -rf $(OBJ_DIR)
+			@rm -rf $(OBJ_DIR) outfile
 			@echo "\033[36;1m ------>>  clean\033[0m"
 
 fclean:		clean
-			@rm -f $(NAME) a.out
+			@rm -f $(NAME) a.out outfile
 			@echo "\033[36;1m ------>> fclean\033[0m"
 
 re:			fclean all

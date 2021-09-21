@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/21 15:26:38 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/21 16:36:11 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PIPEX_H
 
 # include <stdio.h> //
-# include <sys/types.h>//
 # include <sys/wait.h> //
 
 # include <stdlib.h>
