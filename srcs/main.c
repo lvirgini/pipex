@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/21 18:59:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/21 22:10:23 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char *argv[], char *env[])
 		// dans le fils : redirection fd : la sortie std du fils deviens l'entrée std du second fils
 		if (dup2(pipefd[1], 1) == -1)
      		perror("dup2");
-		write (1, "test\n", 5);
+		//write (1, "test\n", 5);
         exec_command(cmd1, env);
         exit(EXIT_SUCCESS);
     }
@@ -110,16 +110,17 @@ int	main(int argc, char *argv[], char *env[])
    			int		ret;
    			int		status;
 
+			close(pipefd[1]);
 			if (dup2(pipefd[0], 0) == -1)
      			perror("dup2");
-			//write (1, "test\n", 5);
+			//write (1, "test\n", 5); OK
 			
-			 while ((ret = read(0, buffer, 1023)) != 0)
+		/*	 while ((ret = read(0, buffer, 1023)) != 0)
 			{
 				buffer[ret] = 0;
 				printf("%s\n", buffer);
 			}
-			printf("%s\n", buffer);
+			printf("ret = %d : %s\n", ret, buffer);*/
 			//if (dup2(pipefd[0], 0) == -1)
      		//	perror("dup2");
        		exec_command(cmd2, env);
