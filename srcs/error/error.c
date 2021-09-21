@@ -6,9 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 11:09:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/21 11:48:47 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 00:33:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+int	free_and_return(t_cmd *cmd, int nb_cmd)
+{
+	free_t_cmd(cmd, nb_cmd);
+	return (-1);
+}

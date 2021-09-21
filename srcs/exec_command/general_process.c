@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_argv_for_execve.c                              :+:      :+:    :+:   */
+/*   general_process.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 12:34:25 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 00:39:53 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/09/21 22:17:28 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/09/21 23:16:40 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/*
-** malloc argc - 3 : ./pipex infile outfile : are not cmd
-*/
-
-t_cmd	*get_commands_and_arguments(int argc, char *argv[])
+int	creating_process(char **cmd1, char **cmd2)
 {
-	t_cmd	*cmd;
-	int		i;
-
-	cmd = malloc_t_cmd(argc - 3);
-	if (!cmd)
-		return (NULL);
-	i = 0;
-	while (i < argc - 3)
-	{
-		cmd[i].argv = ft_split(argv[i + 2], ' ');
-		if (cmd[i].argv == NULL)
-		{
-			perror("Malloc ft_split");
-			free_t_cmd(cmd, i);
-			return (NULL);
-		}
-		i++;
-	}
-	return (cmd);
-}

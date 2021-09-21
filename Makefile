@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/21 17:16:24 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/22 00:42:46 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME =		pipex
 
 OBJ_DIR =	obj/
 INC_DIR = 	includes/
-SRC_DIR = 	srcs srcs/utils srcs/formating_argv srcs/exec_command
+SRC_DIR = 	srcs srcs/utils srcs/formating_argv srcs/exec_command srcs/error srcs/structure
 
 OBJ		= $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 
@@ -34,6 +34,8 @@ SRCS	=	main.c \
 			ft_strchr_len.c \
 			ft_strcmp.c \
 			ft_split.c \
+			error.c \
+			t_cmd.c \
 			get_argv_for_execve.c \
 			exec_command.c \
 
@@ -69,7 +71,8 @@ $(NAME)	:	$(OBJ) $(INC_DIR)
 			@echo "\n\t*     Compilation $(NAME)       *\t   \033[32;1m--------->>> \033[4;5mComplete\033[0m"
 			@echo "\n\t\033[036;1m*.............................*\033[0m\n"
 	
-
+leaks	:	$(OBJ) $(INC_DIR)
+			@$(CC) $(CFLAG) - $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
 show	:
 			@echo "SRC_DIR : $(SRC_DIR)\n"
 			@echo "LIB_DIR : $(LIB_DIR)\n"

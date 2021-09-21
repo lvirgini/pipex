@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/21 16:36:11 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 00:32:01 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,36 @@
 # include <errno.h>
 # include <string.h>
 
+enum	e_bool
+{
+	SUCCESS,
+	FAILURE,
+};
+
+typedef struct s_cmd
+{
+	char	**argv;
+} t_cmd ;
+
+/*
+** STRUCTURES
+*/
+
+void	free_t_cmd(t_cmd *cmd, int nb_cmd);
+t_cmd	*malloc_t_cmd(int nb_cmd);
 
 /*
 ** ARGUMENTS
 */
 
-char	**get_argv_for_execve(char	*arguments);
-int		exec_command(char	**cmd, char	*env[]);
+t_cmd	*get_commands_and_arguments(int argc, char *argv[]);
+int		exec_command(char **cmd, char *env[]);
+
+/*
+** ERRORS
+*/
+
+int		free_and_return(t_cmd *cmd, int nb_cmd);
 
 /*
 ** UTILS FUNCTIONS

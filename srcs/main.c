@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/21 22:10:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 00:41:41 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,38 @@ outfile.\n./pipex infile cmd1 cmd2 outfile\n\n";
 
 int	main(int argc, char *argv[], char *env[])
 {
-	char	**cmd1;
-	char	**cmd2;
+	t_cmd	*cmd;
 	int		infile;
 	int		outfile;
 	
 	if (argc != 5)
 		return (print_usage());
 	errno = 0;
-	cmd1 = get_argv_for_execve(argv[2]);
-	cmd2 = get_argv_for_execve(argv[3]);
+
+/// CREATION T_CMD : recuperation des arguments pour chaque cmd
+	cmd = get_commands_and_arguments(argc, argv);
+	if (!cmd)
+		return (-1);
+	free_and_return(cmd, 2);
+
+///		il faut recuperer le bon  PATH des cmds avec env /! :	
+
+/// MISE EN PLACE DES FD
+/// PIPE
+/// FORK
+/// execution des process
+/// attente de la fin de tous les process.
+
+
+
+	//if (opening_file(&infile, &outfile, argv) == FAILURE)
+	//	return (free_and_return(cmd1, cmd2));
 
 
 	// ouverture infile en lecture seule avec close(fd) car utilisé avec execve
 	infile = open(argv[1], O_RDONLY | O_CLOEXEC);
-	
-	// ouvreture outfile avec creation possible et tous les droits
-	//-rw-r--r-- 1 mini mini     0 sept. 21 17:47 outfile
+		// ouvreture outfile avec creation possible et tous les droits (j'ai pas tout bien compris)
+	//dans le shell creation comme ca : -rw-r--r-- 1 mini mini     0 sept. 21 17:47 outfile
 	outfile = open(argv[4], O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP);
 
 
@@ -63,7 +78,6 @@ int	main(int argc, char *argv[], char *env[])
 	dup2(infile, 0);
 	dup2(outfile, 1);
 	//write(1, "test\n", 5); OK
-
 
 	// create pipe
 	//lecture sur le pipefd[0]  et écriture sur le pipefd[1].
@@ -92,7 +106,7 @@ int	main(int argc, char *argv[], char *env[])
 		if (dup2(pipefd[1], 1) == -1)
      		perror("dup2");
 		//write (1, "test\n", 5);
-        exec_command(cmd1, env);
+        exec_command(cmd[0].argv, env);
         exit(EXIT_SUCCESS);
     }
 	else 
@@ -113,18 +127,8 @@ int	main(int argc, char *argv[], char *env[])
 			close(pipefd[1]);
 			if (dup2(pipefd[0], 0) == -1)
      			perror("dup2");
-			//write (1, "test\n", 5); OK
-			
-		/*	 while ((ret = read(0, buffer, 1023)) != 0)
-			{
-				buffer[ret] = 0;
-				printf("%s\n", buffer);
-			}
-			printf("ret = %d : %s\n", ret, buffer);*/
-			//if (dup2(pipefd[0], 0) == -1)
-     		//	perror("dup2");
-       		exec_command(cmd2, env);
-        	//exit (EXIT_SUCCESS);
+       		exec_command(cmd[1].argv, env);
+        	exit (EXIT_SUCCESS);
 		}
 	}
 

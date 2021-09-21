@@ -1,40 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_argv_for_execve.c                              :+:      :+:    :+:   */
+/*   t_cmd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 12:34:25 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 00:39:53 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/09/22 00:09:08 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/09/22 00:22:32 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/*
-** malloc argc - 3 : ./pipex infile outfile : are not cmd
-*/
+static void	free_double_table(char **s) // name ? 
+{
+	size_t	i;
 
-t_cmd	*get_commands_and_arguments(int argc, char *argv[])
+	i = 0;
+	while (s[i])
+		free(s[i++]);
+	free(s);
+}
+
+void	free_t_cmd(t_cmd *cmd, int nb_cmd)
+{
+	while (nb_cmd)
+	{
+		free_double_table((cmd + nb_cmd)->argv);
+		nb_cmd--;
+	}
+	free (cmd);
+}
+
+t_cmd	*malloc_t_cmd(int nb_cmd)
 {
 	t_cmd	*cmd;
-	int		i;
-
-	cmd = malloc_t_cmd(argc - 3);
+	
+	cmd = (t_cmd *)malloc(sizeof(t_cmd) * nb_cmd);
 	if (!cmd)
-		return (NULL);
-	i = 0;
-	while (i < argc - 3)
-	{
-		cmd[i].argv = ft_split(argv[i + 2], ' ');
-		if (cmd[i].argv == NULL)
-		{
-			perror("Malloc ft_split");
-			free_t_cmd(cmd, i);
-			return (NULL);
-		}
-		i++;
-	}
+		perror("malloc t_cmd");
 	return (cmd);
 }
