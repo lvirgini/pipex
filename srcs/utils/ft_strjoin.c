@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_argv_for_execve.c                              :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 12:34:25 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 18:20:35 by lvirgini         ###   ########.fr       */
+/*   Created: 2019/10/11 16:35:37 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/09/22 16:22:15 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /*
-** malloc argc - 3 : ./pipex infile outfile : are not cmd
+**	Alloue avec malloc et retourne une nouvelle chaine
+**	Résultat de la concaténation de (*s1) et (*s2) dans cet ordre.
 */
 
-t_cmd	*get_commands_and_arguments(int argc, char *argv[])
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	t_cmd	*cmd;
+	int		len;
 	int		i;
+	int		j;
+	char	*dest;
 
-	cmd = malloc_t_cmd(argc - 3);
-	if (!cmd)
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	dest = (char *)malloc(sizeof(*dest) * (len + 1));
+	if (dest == NULL)
 		return (NULL);
 	i = 0;
-	while (i < argc - 3)
-	{
-		cmd[i].argv = ft_split(argv[i + 2], ' ');
-		if (!cmd[i].argv)
-		{
-			perror("Malloc ft_split");
-			free_t_cmd(cmd, i - 1);
-			return (NULL);
-		}
-		i++;
-	}
-	return (cmd);
+	j = 0;
+	while (s1[i])
+		dest[j++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		dest[j++] = s2[i++];
+	dest[j] = '\0';
+	return (dest);
 }

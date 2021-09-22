@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 11:56:02 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 18:52:43 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum	e_bool
 typedef struct s_cmd
 {
 	char	**argv;
+	char	*path;
 } t_cmd ;
 
 /*
@@ -54,7 +55,7 @@ int		exec_command(char **cmd, char *env[]);
 ** ENVIRONNEMENT | PATHS
 */
 
-char	*get_env(char *env[], char	*key);
+int		add_path_for_all_cmd(t_cmd *cmd, char *env[], int nb_cmd);
 
 /*
 ** ERRORS
@@ -66,6 +67,7 @@ int		free_and_return(t_cmd *cmd, int nb_cmd);
 ** UTILS FUNCTIONS
 */
 
+void	free_double_table(char **s); // name ? 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_strchr_len(const char *s, int c);
@@ -76,5 +78,6 @@ char	*ft_strdup(const char *s);
 char	*ft_strdup_max(const char *s, size_t max);
 char	**ft_split(const char *s, const char c);
 char	*ft_strjoin(char const *s1, char const *s2);
+void	*ft_memset(void *s, int c, size_t n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 11:55:40 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 18:36:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int	main(int argc, char *argv[], char *env[])
 	cmd = get_commands_and_arguments(argc, argv);
 	if (!cmd)
 		return (-1); //
-	printf("PATH = %s\n", get_env(env, "PATH="));
+	if (add_path_for_all_cmd(cmd, env, argc - 3) == SUCCESS)
+		return (free_and_return(cmd, 2));
+
 
 
 	
@@ -123,9 +125,9 @@ int	main(int argc, char *argv[], char *env[])
 		}
 		if (cpid2 == 0) // FILS 2
 		{
-			char	buffer[1024];
-   			int		ret;
-   			int		status;
+			//char	buffer[1024];
+   			//int		ret;
+   			//int		status;
 
 			close(pipefd[1]);
 			if (dup2(pipefd[0], 0) == -1)

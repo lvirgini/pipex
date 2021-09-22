@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/22 11:51:57 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/22 18:23:54 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ LIB		=
 HEADERS =	pipex.h
 
 SRCS	=	main.c \
+			ft_memset.c \
 			ft_strlen.c \
 			ft_strlcat.c \
 			ft_strncpy.c \
@@ -99,7 +100,7 @@ clean:
 			@echo "\033[36;1m ------>>  clean\033[0m"
 
 fclean:		clean
-			@rm -f $(NAME) a.out outfile
+			@rm -f $(NAME) a.out
 			@echo "\033[36;1m ------>> fclean\033[0m"
 
 re:			fclean all
