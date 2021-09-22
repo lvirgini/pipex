@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 19:09:10 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:18:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int argc, char *argv[], char *env[])
 		if (dup2(pipefd[1], 1) == -1)
      		perror("dup2");
 		//write (1, "test\n", 5);
-        exec_command(cmd[0].argv, env);
+        exec_command(&cmd[0], env);
         exit(EXIT_SUCCESS);
     }
 	else 
@@ -115,10 +115,10 @@ int	main(int argc, char *argv[], char *env[])
 			close(pipefd[1]);
 			if (dup2(pipefd[0], 0) == -1)
      			perror("dup2");
-       		exec_command(cmd[1].argv, env);
+       		exec_command(&cmd[1], env);
         	exit (EXIT_SUCCESS);
 		}
 	}
-
+	return (free_and_return(cmd, 2));
 	return (0);
 }

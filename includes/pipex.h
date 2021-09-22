@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 19:09:37 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:18:23 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_cmd	*malloc_t_cmd(int nb_cmd);
 */
 
 t_cmd	*get_commands_and_arguments(int argc, char *argv[]);
-int		exec_command(char **cmd, char *env[]);
+int		exec_command(t_cmd *cmd, char *env[]);
 
 /*
 ** ENVIRONNEMENT | PATHS
