@@ -1,19 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 11:09:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 11:44:30 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/05/25 10:22:56 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/06/22 11:15:04 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-int	free_and_return(t_cmd *cmd, int nb_cmd)
+/*
+** GET NEXT LINE . c
+*/
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
+
+# ifndef NB_FD
+#  define NB_FD 1
+# endif
+
+typedef struct s_gnl	t_gnl;
+
+struct			s_gnl
 {
-	free_t_cmd(cmd, nb_cmd);
-	return (-1); //
-}
+	int		fd;
+	char	buf[BUFFER_SIZE + 1];
+};
+
+int				get_next_line(int fd, char **line);
+
+#endif

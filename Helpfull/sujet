@@ -1,0 +1,46 @@
+• You have to handle errors sensitively. In no way can your program quit unexpectedly
+(Segmentation fault, bus error, double free, etc). If you are unsure, handle the errors
+like the shell command < file1 cmd1 | cmd2 > file2.
+• Your program cannot have memory leaks.
+• You are allowed to use the following functions:
+
+◦ access
+◦ open
+◦ unlink
+◦ close
+◦ read
+◦ write
+◦ malloc
+◦ waitpid
+◦ wait
+◦ free
+◦ pipe
+◦ dup
+◦ dup2
+◦ execve
+◦ fork
+◦ perror
+◦ strerror
+◦ exit
+
+
+./pipex infile "ls -l" "wc -l" outfile
+ argv[0] = ./pipex
+ argv[1] = infile
+ argv[2] = ls -l
+ argv[3] = wc -l
+ argv[4] = outfile
+
+
+OPEN : PERMISSION
+
+ ----r-x--- 1 mini mini     0 sept. 21 18:19 s_irwxg
+-------r-x 1 mini mini     0 sept. 21 18:19 s_irwxo
+-rwx------ 1 mini mini     0 sept. 21 18:19 s_irwxu
+drwxr-xr-x 8 mini mini  4096 sept. 21 14:25 srcs
+-rwxr-xr-x 1 mini mini    36 sept. 21 17:18 test.sh
+mini@debian:~/42/pipex$ ls -l > s_irwg 
+bash: s_irwg: Permission non accordée
+mini@debian:~/42/pipex$ ls -l > s_irwxo 
+bash: s_irwxo: Permission non accordée
+mini@debian:~/42/pipex$ ls -l > s_irwxu 

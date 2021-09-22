@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 00:41:41 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 11:55:40 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ int	main(int argc, char *argv[], char *env[])
 /// CREATION T_CMD : recuperation des arguments pour chaque cmd
 	cmd = get_commands_and_arguments(argc, argv);
 	if (!cmd)
-		return (-1);
-	free_and_return(cmd, 2);
+		return (-1); //
+	printf("PATH = %s\n", get_env(env, "PATH="));
+
+
+	
+	return (free_and_return(cmd, 2));
 
 ///		il faut recuperer le bon  PATH des cmds avec env /! :	
 
@@ -81,8 +85,7 @@ int	main(int argc, char *argv[], char *env[])
 
 	// create pipe
 	//lecture sur le pipefd[0]  et écriture sur le pipefd[1].
-	//  cmd 1 -> pipefd1 = sortie std (1)
-	//	pipefd0 = entrée std (0) -> cmd 2
+	//  cmd 1 -> pipefd1 = sortie std (1) -----> pipefd0 = entrée std (0) -> cmd 2
 	int pipefd[2];
 
     if (pipe(pipefd) == -1) {

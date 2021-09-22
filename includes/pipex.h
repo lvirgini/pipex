@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 00:32:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 11:56:02 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include "get_next_line.h"
 
 enum	e_bool
 {
@@ -50,6 +51,12 @@ t_cmd	*get_commands_and_arguments(int argc, char *argv[]);
 int		exec_command(char **cmd, char *env[]);
 
 /*
+** ENVIRONNEMENT | PATHS
+*/
+
+char	*get_env(char *env[], char	*key);
+
+/*
 ** ERRORS
 */
 
@@ -63,7 +70,11 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int		ft_strchr_len(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strncpy(char *dst, const char *src, size_t n);
+char	*ft_strdup(const char *s);
 char	*ft_strdup_max(const char *s, size_t max);
 char	**ft_split(const char *s, const char c);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

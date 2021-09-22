@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 11:09:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 11:44:30 by lvirgini         ###   ########.fr       */
+/*   Created: 2020/03/07 13:23:59 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/09/22 10:39:43 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	free_and_return(t_cmd *cmd, int nb_cmd)
+/*
+** STRNCPY copie src dans dst.
+** Si srclen < n , rajoute des \0 jusqu'a (n).
+*/
+
+char	*ft_strncpy(char *dst, const char *src, size_t n)
 {
-	free_t_cmd(cmd, nb_cmd);
-	return (-1); //
+	size_t		i;
+
+	i = 0;
+	while (src[i] != '\0' && i < n)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	while (i < n)
+		dst[i++] = '\0';
+	return (dst);
 }

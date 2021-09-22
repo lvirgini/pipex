@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/22 00:42:46 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/22 11:51:57 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME =		pipex
 
 OBJ_DIR =	obj/
 INC_DIR = 	includes/
-SRC_DIR = 	srcs srcs/utils srcs/formating_argv srcs/exec_command srcs/error srcs/structure
+SRC_DIR = 	srcs srcs/utils srcs/formating_argv srcs/exec_command srcs/error srcs/structure srcs/env
 
 OBJ		= $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 
@@ -30,12 +30,17 @@ HEADERS =	pipex.h
 SRCS	=	main.c \
 			ft_strlen.c \
 			ft_strlcat.c \
+			ft_strncpy.c \
 			ft_strdup.c \
 			ft_strchr_len.c \
 			ft_strcmp.c \
+			ft_strncmp.c \
 			ft_split.c \
+			ft_strjoin.c \
+			get_next_line.c \
 			error.c \
 			t_cmd.c \
+			get_env_path.c \
 			get_argv_for_execve.c \
 			exec_command.c \
 
