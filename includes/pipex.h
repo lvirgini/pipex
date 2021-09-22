@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 18:52:43 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:09:37 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		exec_command(char **cmd, char *env[]);
 */
 
 int		add_path_for_all_cmd(t_cmd *cmd, char *env[], int nb_cmd);
+int		set_up_files_descriptor(int	*infile, int *outfile, char *argv[]);
 
 /*
 ** ERRORS

@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/22 18:23:54 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/22 19:10:07 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS	=	main.c \
 			error.c \
 			t_cmd.c \
 			get_env_path.c \
+			set_up_fd.c \
 			get_argv_for_execve.c \
 			exec_command.c \
 

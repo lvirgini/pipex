@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 18:36:53 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/22 19:09:10 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,12 @@ int	main(int argc, char *argv[], char *env[])
 	cmd = get_commands_and_arguments(argc, argv);
 	if (!cmd)
 		return (-1); //
-	if (add_path_for_all_cmd(cmd, env, argc - 3) == SUCCESS)
+	// recuperation des path pour chaque commande
+	if (add_path_for_all_cmd(cmd, env, 2) == FAILURE)
+		return (free_and_return(cmd, 2));
+	// mise en place des fd du programme principal :
+	// infile = std 0  t outfile = std 1
+	if (set_up_files_descriptor(&infile, &outfile, argv) == FAILURE)
 		return (free_and_return(cmd, 2));
 
 
@@ -57,33 +62,11 @@ int	main(int argc, char *argv[], char *env[])
 	
 	return (free_and_return(cmd, 2));
 
-///		il faut recuperer le bon  PATH des cmds avec env /! :	
-
-/// MISE EN PLACE DES FD
 /// PIPE
 /// FORK
 /// execution des process
 /// attente de la fin de tous les process.
 
-
-
-	//if (opening_file(&infile, &outfile, argv) == FAILURE)
-	//	return (free_and_return(cmd1, cmd2));
-
-
-	// ouverture infile en lecture seule avec close(fd) car utilisé avec execve
-	infile = open(argv[1], O_RDONLY | O_CLOEXEC);
-		// ouvreture outfile avec creation possible et tous les droits (j'ai pas tout bien compris)
-	//dans le shell creation comme ca : -rw-r--r-- 1 mini mini     0 sept. 21 17:47 outfile
-	outfile = open(argv[4], O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP);
-
-
-	// redirection des FD pour correspondre a pipex
-	//	fd0 devient infile
-	//	fd01 devient outfile
-	dup2(infile, 0);
-	dup2(outfile, 1);
-	//write(1, "test\n", 5); OK
 
 	// create pipe
 	//lecture sur le pipefd[0]  et écriture sur le pipefd[1].
