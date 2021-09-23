@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 13:50:04 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/21 14:21:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/23 18:11:28 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** en appelant malloc.
 */
 
-char	*ft_strdup(const char *s)//
+char	*ft_strdup(const char *s)
 {
 	size_t		i;
 	char		*dst;

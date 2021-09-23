@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 19:18:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:27:48 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,37 @@ outfile.\n./pipex infile cmd1 cmd2 outfile\n\n";
 	return (-1);
 }
 
+/*
+** CREATION T_CMD : recuperation des arguments pour chaque cmd
+**	recuperation des path pour chaque commande
+** mise en place des fd du programme principal :
+**
+*/
 
 int	main(int argc, char *argv[], char *env[])
 {
 	t_cmd	*cmd;
 	int		infile;
 	int		outfile;
+	int		nb_cmd;
 	
 	if (argc != 5)
 		return (print_usage());
+	nb_cmd = 2;
 	errno = 0;
-
-/// CREATION T_CMD : recuperation des arguments pour chaque cmd
 	cmd = get_commands_and_arguments(argc, argv);
 	if (!cmd)
 		return (-1); //
-	// recuperation des path pour chaque commande
-	if (add_path_for_all_cmd(cmd, env, 2) == FAILURE)
-		return (free_and_return(cmd, 2));
-	// mise en place des fd du programme principal :
-	// infile = std 0  t outfile = std 1
+	if (add_path_for_all_cmd(cmd, env, nb_cmd) == FAILURE)
+		return (free_and_return(cmd, nb_cmd));
 	if (set_up_files_descriptor(&infile, &outfile, argv) == FAILURE)
-		return (free_and_return(cmd, 2));
-
-
+		return (free_and_return(cmd, nb_cmd));
+	make_pipex(cmd, nb_cmd, outfile, env);	
+	free_and_return(cmd, nb_cmd);
+	return (0);
 
 	
-	return (free_and_return(cmd, 2));
+	//return (free_and_return(cmd, 2));
 
 /// PIPE
 /// FORK
@@ -91,8 +95,8 @@ int	main(int argc, char *argv[], char *env[])
     if (cpid == 0) //FILS 1
 	{   
 		// dans le fils : redirection fd : la sortie std du fils deviens l'entrée std du second fils
-		if (dup2(pipefd[1], 1) == -1)
-     		perror("dup2");
+		//if (dup2(pipefd[1], 1) == -1)
+     	//	perror("dup2");
 		//write (1, "test\n", 5);
         exec_command(&cmd[0], env);
         exit(EXIT_SUCCESS);
@@ -113,8 +117,8 @@ int	main(int argc, char *argv[], char *env[])
    			//int		status;
 
 			close(pipefd[1]);
-			if (dup2(pipefd[0], 0) == -1)
-     			perror("dup2");
+			//if (dup2(pipefd[0], 0) == -1)
+     		//	perror("dup2");
        		exec_command(&cmd[1], env);
         	exit (EXIT_SUCCESS);
 		}

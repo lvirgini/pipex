@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:34:17 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 18:53:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/23 15:56:27 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 	size_t	i;
 	char	*slash_cmd;
 
+	if (access(cmd->argv[0], X_OK) == 0)
+		return (ft_strdup(cmd->argv[0]));
 	slash_cmd = ft_strjoin("/", cmd->argv[0]);
 	if (!slash_cmd)
 	{

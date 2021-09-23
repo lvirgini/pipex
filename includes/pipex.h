@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/22 19:18:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:37:05 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_cmd	*malloc_t_cmd(int nb_cmd);
 ** ARGUMENTS
 */
 
+int	make_pipex(t_cmd *cmd, int nb_cmd, int outfile, char *env[]);
 t_cmd	*get_commands_and_arguments(int argc, char *argv[]);
 int		exec_command(t_cmd *cmd, char *env[]);
 
