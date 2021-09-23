@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/23 16:00:54 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/23 20:12:57 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,18 @@ NAME =		pipex
 
 OBJ_DIR =	obj/
 INC_DIR = 	includes/
-SRC_DIR = 	srcs srcs/utils srcs/formating_argv srcs/exec_command srcs/error srcs/structure srcs/env
+SRC_DIR = 	srcs srcs/utils \
+			srcs/formating_argv \
+			srcs/exec_command \
+			srcs/error \
+			srcs/structure \
+			srcs/env
 
 OBJ		= $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
 
 LIB		=	
 
-HEADERS =	pipex.h
+HEADERS =	pipex.h pipex_utils.h
 
 SRCS	=	main.c \
 			ft_memset.c \
@@ -38,7 +43,6 @@ SRCS	=	main.c \
 			ft_strncmp.c \
 			ft_split.c \
 			ft_strjoin.c \
-			get_next_line.c \
 			error.c \
 			t_cmd.c \
 			get_env_path.c \
@@ -55,7 +59,7 @@ vpath %.h $(foreach dir, $(INC_DIR), $(dir):)
 # ----------------- #
 
 CC = 			gcc
-CFLAG =			-Wall  -Wextra -g
+CFLAG =			-Wall -Wextra -g
 IFLAG = 		$(foreach dir, $(INC_DIR), -I $(dir))
 LFLAG =			$(foreach lib, $(LIB), -l $(lib) )
 
@@ -98,11 +102,11 @@ show	:
 # ----------------- #
 
 clean:
-			@rm -rf $(OBJ_DIR) outfile
+			@rm -rf $(OBJ_DIR)
 			@echo "\033[36;1m ------>>  clean\033[0m"
 
 fclean:		clean
-			@rm -f $(NAME) a.out
+			@rm -f $(NAME)
 			@echo "\033[36;1m ------>> fclean\033[0m"
 
 re:			fclean all

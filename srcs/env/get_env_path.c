@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:34:17 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/23 15:56:27 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/23 20:39:27 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_env(char *env[], char	*key)
 }
 
 /*
-** split of env PATH with : delimitor
+** split of line env PATH with ':' as delimitor
 */
 
 char	**split_env(char *env)
@@ -50,7 +50,9 @@ char	**split_env(char *env)
 }
 
 /*
-** make argv[0] name of programme with / to find the complete path
+** Find path for the command program
+** if absolute path return it
+** else add '/' to cmd and test all path.
 */
 
 char	*get_path_for_command(t_cmd *cmd, char *path_env[])
@@ -73,7 +75,7 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 		if (access(cmd->path, X_OK) == 0)
 		{
 			free(slash_cmd);
-			return(cmd->path);
+			return (cmd->path);
 		}
 		free(cmd->path);
 		i++;
@@ -85,10 +87,10 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 ** add path to all cmd
 */
 
-int		add_path_for_all_cmd(t_cmd *cmd, char *env[], int nb_cmd)
+int	add_path_for_all_cmd(t_cmd *cmd, char *env[], int nb_cmd)
 {
-	char 	**path_env;
-	int	i;
+	char	**path_env;
+	int		i;
 
 	path_env = split_env(get_env(env, "PATH="));
 	if (!path_env)

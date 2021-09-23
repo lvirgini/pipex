@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/23 17:27:48 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/23 21:32:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,6 @@ int	main(int argc, char *argv[], char *env[])
 	free_and_return(cmd, nb_cmd);
 	return (0);
 
-	
-	//return (free_and_return(cmd, 2));
-
-/// PIPE
-/// FORK
-/// execution des process
-/// attente de la fin de tous les process.
-
 
 	// create pipe
 	//lecture sur le pipefd[0]  et écriture sur le pipefd[1].
@@ -123,6 +115,5 @@ int	main(int argc, char *argv[], char *env[])
         	exit (EXIT_SUCCESS);
 		}
 	}
-	return (free_and_return(cmd, 2));
 	return (0);
 }
