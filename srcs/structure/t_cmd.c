@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 00:09:08 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/23 21:31:23 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/26 23:26:01 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,58 @@ void	free_double_table(char **s)
 	free(s);
 }
 
-void	free_t_cmd(t_cmd *cmd, int nb_cmd)
-{
-	int	i;
+/*
+** Free all t_cmd
+*/
 
-	i = 0;
-	while (i < nb_cmd)
+void	free_t_cmd(t_cmd *cmd)
+{
+	t_cmd	*to_free;
+
+	while (cmd)
 	{
-		if (cmd[i].argv)
-			free_double_table(cmd[i].argv);
-		if (cmd[i].path)
-			free(cmd[i].path);
-		i++;
+		if (cmd->argv)
+			free_double_table(cmd->argv);
+		if (cmd->path)
+			free(cmd->path);
+		to_free = cmd->next;
+		free(cmd);
+		cmd = to_free;
 	}
-	free(cmd);
 }
 
-t_cmd	*malloc_t_cmd(int nb_cmd)
+/*
+** Malloc t_cmd, get cmd->prev and create split of arguments.
+*/
+
+t_cmd	*malloc_t_cmd(void)
 {
 	t_cmd	*cmd;
 
-	cmd = (t_cmd *)malloc(sizeof(t_cmd) * nb_cmd);
+	cmd = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!cmd)
+	{
 		perror("malloc t_cmd");
-	ft_memset(cmd, 0, sizeof(cmd) * nb_cmd);
+		return (NULL);
+	}
+	ft_memset(cmd, 0, sizeof(cmd));
+	return (cmd);
+}
+
+t_cmd	*create_t_cmd(char *argv, t_cmd *prev)
+{
+	t_cmd	*cmd;
+
+	cmd = malloc_t_cmd();
+	if (cmd)
+	{
+		cmd->prev = prev;
+		cmd->argv = ft_split(argv, ' ');
+		if (!cmd->argv)
+		{
+			perror("malloc ft_split");
+			return (NULL);
+		}
+	}
 	return (cmd);
 }

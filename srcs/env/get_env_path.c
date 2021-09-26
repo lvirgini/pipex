@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:34:17 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/23 20:39:27 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/26 22:57:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,17 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 ** add path to all cmd
 */
 
-int	add_path_for_all_cmd(t_cmd *cmd, char *env[], int nb_cmd)
+int	add_path_for_all_cmd(t_cmd *cmd, char *env[])
 {
 	char	**path_env;
-	int		i;
 
 	path_env = split_env(get_env(env, "PATH="));
 	if (!path_env)
 		return (FAILURE);
-	i = 0;
-	while (i < nb_cmd)
+	while (cmd)
 	{
-		cmd[i].path = get_path_for_command(&cmd[i], path_env);
-		i++;
+		cmd->path = get_path_for_command(cmd, path_env);
+		cmd = cmd->next;
 	}
 	free_double_table(path_env);
 	return (SUCCESS);
