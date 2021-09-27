@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/23 20:12:57 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/27 15:21:14 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,13 +67,8 @@ LFLAG =			$(foreach lib, $(LIB), -l $(lib) )
 #	  FONCTIONS		#
 # ----------------- #
 
-all		:	${NAME}
-
-$(OBJ_DIR):
-			@mkdir -p $@
-
-
-$(OBJ_DIR)%.o: %.c $(HEADERS) | $(OBJ_DIR)
+$(OBJ_DIR)%.o: %.c $(HEADERS)
+			@mkdir -p $(OBJ_DIR)
 			@echo "\033[32mCompilation de ... $(foreach file, $< , $(notdir $<))\033[0m"
 			@$(CC) $(CFLAG) $(IFLAG) -o $@ -c $<
 			
@@ -83,6 +78,8 @@ $(NAME)	:	$(OBJ) $(INC_DIR)
 			@echo "\n\t*     Compilation $(NAME)       *\t   \033[32;1m--------->>> \033[4;5mComplete\033[0m"
 			@echo "\n\t\033[036;1m*.............................*\033[0m\n"
 	
+all		:	${NAME}
+
 leaks	:	$(OBJ) $(INC_DIR)
 			@$(CC) $(CFLAG) - $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
 show	:

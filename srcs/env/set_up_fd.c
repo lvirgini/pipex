@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 18:59:50 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/26 22:58:20 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/27 18:16:11 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,63 @@
 ** if open can't find infile, display error and continue;
 ** if open can't create outfile : rdisplay error and exit.
 */
-
-int	set_up_files_descriptor(int	*infile, int *outfile, char *argv[])
+/*
+int		set_up_input(char *file, int *fd)
 {
-	*infile = open(argv[1], O_RDONLY | O_CLOEXEC);
-	if (*infile == -1)
-		perror(argv[1]);
-	else if (dup2(*infile, 0) == -1)
-	{
-		close(*infile);
-		perror("dup2");
-		return (FAILURE);
+	*fd == open(file, O_RDONLY | O_CLOEXEC);
+	if (*fd == -1)
+		perror(file);
+	else if (dup2(*fd, 0) == -1)
+	{	
+		close(*fd);
+		perror("dup2 set up files descriptor");
 	}
-	*outfile = open(argv[4], O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP);
-	if (*outfile == -1 || dup2(*outfile, 1) == -1)
+	else
+		return (SUCCESS);
+	return (FAILURE);
+	
+}
+*/
+int	set_up_input(int std_io[2], char *input)
+{
+	std_io[IN] = open(input, O_RDONLY | O_CLOEXEC);
+	if (std_io[IN] == -1)
+		perror(input);	
+	else if (dup2(std_io[0], 0) == -1)
+		perror("dup2 set up files descriptor");
+	else
+		return (SUCCESS);
+	return (FAILURE);
+	
+}
+
+int	set_up_output(int std_io[2], char *output)
+{
+	std_io[OUT] = open(output, O_CREAT | O_TRUNC | O_WRONLY , S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (std_io[OUT] == -1)
+		perror(output);
+	else if (dup2(std_io[OUT], 1) == -1)
+		perror("dup2 set up files descriptor");
+	else
+		return (SUCCESS);
+	return (FAILURE);
+}
+
+/*
+int		set_up_files_descriptor(int	std_io[2], char *input, char *output)
+{
+	std_io[IN] = open(input, O_RDONLY | O_CLOEXEC);
+	if (std_io[IN] == -1)
+		perror(input);	
+	else if (dup2(std_io[0], 0) == -1)
+		perror("dup2 set up files descriptor");
+
+	std_io[OUT] = open(output, O_CREAT | O_TRUNC | O_WRONLY , S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (std_io[OUT] == -1 || dup2(std_io[OUT], 1) == -1)
 	{
-		close(*infile);
-		close(*outfile);
-		perror("dup2");
+		perror("dup2 set up files descriptor");
 		return (FAILURE);
 	}
 	return (SUCCESS);
 }
+*/

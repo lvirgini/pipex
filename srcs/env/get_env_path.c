@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:34:17 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/26 22:57:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:25:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 		free(cmd->path);
 		i++;
 	}
-	return (cmd->argv[0]);
+	free(slash_cmd);
+	return (ft_strdup(cmd->argv[0]));
 }
 
 /*
