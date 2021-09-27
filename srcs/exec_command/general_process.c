@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 22:17:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/27 18:25:03 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:30:10 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,40 @@ void	close_pipe(int	pipe[2])
 	close(pipe[OUT]);
 }
 
+int	execute_all_cmd(t_cmd *cmd, char *env[])
+{
+	while (cmd)
+	{
+		if (cmd->path == NULL)
+		{
+			write(2, "pipex: ", 8);
+			write(2, cmd->argv[0], ft_strlen(cmd->argv[0]));
+			write(2, ": command not found\n", 20);
+		}
+		else
+		{
+			if (cmd->next)
+			if (pipe(cmd->pipe) == -1)
+				return (FAILURE);
+			cmd->pid = creating_process(cmd, env);
+			if (cmd->next)
+			close(cmd->pipe[IN]);
+		}
+		cmd = cmd->next;
+	}
+	return (SUCCESS);
+}
 
+void	wait_all_process(t_cmd *cmd)
+{
+	while (cmd)
+	{
+		waitpid(cmd->pid, NULL, 0);
+		cmd = cmd->next;
+	}
+}
 int	make_pipex(t_cmd *cmd, char *env[], char *input, char *output)
 {
-	int		status;
-	pid_t	pid;
 	int		std_io[2];
 
 	if (set_up_input(std_io, input) == FAILURE)
@@ -60,17 +89,8 @@ int	make_pipex(t_cmd *cmd, char *env[], char *input, char *output)
 		close_pipe(std_io);
 		return (FAILURE);
 	}
-	while (cmd)
-	{
-		if (cmd->next)
-			if (pipe(cmd->pipe) == -1)
-				return (FAILURE);
-		pid = creating_process(cmd, env);
-		if (cmd->next)
-			close(cmd->pipe[IN]);
-		cmd = cmd->next;
-	}
-	waitpid(-1, &status, 0);
+	execute_all_cmd(cmd, env);
+	wait_all_process(cmd);
 	close_pipe(std_io);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/27 18:16:03 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:00:17 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ struct s_cmd
 	char	**argv;
 	char	*path;
 	int		pipe[2];
+	pid_t	pid;
 	t_cmd	*next;
 	t_cmd	*prev;
 };

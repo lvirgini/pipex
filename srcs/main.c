@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/27 18:02:27 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/27 20:37:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ int	main(int argc, char *argv[], char *env[])
 		return (errno);
 	if (add_path_for_all_cmd(cmd, env) == FAILURE)
 		return (free_and_return(cmd));
-	//if (set_up_files_descriptor(&infile, &outfile, argv) == FAILURE)
-	//	return (free_and_return(cmd));
 	make_pipex(cmd, env, argv[1], argv[argc - 1]);
 	free_and_return(cmd);
 	return (0);
