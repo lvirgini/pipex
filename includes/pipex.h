@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/27 21:00:17 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/28 17:52:04 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		exec_command(t_cmd *cmd, char *env[]);
 int		add_path_for_all_cmd(t_cmd *cmd, char *env[]);
 int		set_up_input(int std_io[2], char *input);
 int		set_up_output(int std_io[2], char *output);
+void	set_up_io_in_fork(t_cmd *cmd, int std_io[2]);
 
 /*
 ** ERRORS

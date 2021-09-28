@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/28 15:26:19 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/28 16:08:12 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_cmd	*cmd;
 	int		ret;
-	
-	dprintf (2, "%s\n", env[0]);
+
 	if (argc != 5)
 		return (print_usage());
 	errno = 0;

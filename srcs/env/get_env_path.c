@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:34:17 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/28 14:29:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/28 16:42:25 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,21 @@ char	**split_env(char *env)
 ** else add '/' to cmd and test all path.
 */
 
+static char	*get_absolute_path(char *path)
+{
+	if (access(path, X_OK) == 0)
+		return (ft_strdup(path));
+	return (NULL);
+}
+
 char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 {
 	size_t	i;
 	char	*slash_cmd;
 
 	if (cmd->argv[0][0] == '/')
-	{
-		if (access(cmd->argv[0], X_OK) == 0)
-			return (ft_strdup(cmd->argv[0]));
-		return (NULL);
-	} 
-	else
-		slash_cmd = ft_strjoin("/", cmd->argv[0]);
+		return (get_absolute_path(cmd->argv[0]));
+	slash_cmd = ft_strjoin("/", cmd->argv[0]);
 	if (!slash_cmd)
 	{
 		perror("malloc ft_strjoin in get_env");
@@ -102,7 +104,7 @@ int	add_path_for_all_cmd(t_cmd *cmd, char *env[])
 		return (FAILURE);
 	while (cmd)
 	{
-		if (cmd->argv[0])
+		if (cmd->argv && cmd->argv[0])
 			cmd->path = get_path_for_command(cmd, path_env);
 		cmd = cmd->next;
 	}

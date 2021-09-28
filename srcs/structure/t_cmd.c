@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 00:09:08 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/26 23:26:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/28 16:32:13 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_cmd	*malloc_t_cmd(void)
 		return (NULL);
 	}
 	ft_memset(cmd, 0, sizeof(cmd));
+	cmd->path = NULL;
+	cmd->argv = NULL;
 	return (cmd);
 }
 
@@ -68,11 +70,14 @@ t_cmd	*create_t_cmd(char *argv, t_cmd *prev)
 	if (cmd)
 	{
 		cmd->prev = prev;
-		cmd->argv = ft_split(argv, ' ');
-		if (!cmd->argv)
+		if (argv && argv[0])
 		{
-			perror("malloc ft_split");
-			return (NULL);
+			cmd->argv = ft_split(argv, ' ');
+			if (!cmd->argv)
+			{
+				perror("malloc ft_split");
+				return (NULL);
+			}
 		}
 	}
 	return (cmd);
