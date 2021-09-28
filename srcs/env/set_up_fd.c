@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 18:59:50 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/27 18:16:11 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/28 12:47:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	set_up_input(int std_io[2], char *input)
 	std_io[IN] = open(input, O_RDONLY | O_CLOEXEC);
 	if (std_io[IN] == -1)
 		perror(input);	
-	else if (dup2(std_io[0], 0) == -1)
+	else if (dup2(std_io[IN], 0) == -1)
 		perror("dup2 set up files descriptor");
 	else
 		return (SUCCESS);

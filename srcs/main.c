@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/27 20:37:53 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/28 15:26:19 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ outfile.\n./pipex infile cmd1 cmd2 outfile\n\n";
 int	main(int argc, char *argv[], char *env[])
 {
 	t_cmd	*cmd;
-
-
+	int		ret;
+	
+	dprintf (2, "%s\n", env[0]);
 	if (argc != 5)
 		return (print_usage());
 	errno = 0;
 	cmd = get_commands_and_arguments(argc, argv);
 	if (!cmd)
 		return (errno);
-	if (add_path_for_all_cmd(cmd, env) == FAILURE)
-		return (free_and_return(cmd));
-	make_pipex(cmd, env, argv[1], argv[argc - 1]);
+	add_path_for_all_cmd(cmd, env);
+	ret = make_pipex(cmd, env, argv[1], argv[argc - 1]);
 	free_and_return(cmd);
-	return (0);
+	return (ret);
 }
