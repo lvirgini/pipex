@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 12:34:25 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/26 23:26:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/29 12:43:10 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ t_cmd	*get_commands_and_arguments(int argc, char *argv[])
 	first = create_t_cmd(argv[2], NULL);
 	if (!first)
 		return (NULL);
+	first->input = argv[1];
 	cmd = first;
-	i = 1;
-	while (i < argc - 3)
+	i = 3;
+	while (i < argc - 1)
 	{
-		cmd->next = create_t_cmd(argv[i + 2], cmd);
+		cmd->next = create_t_cmd(argv[i], cmd);
 		if (!cmd->next)
 			free_and_return(first);
 		cmd = cmd->next;
 		i++;
 	}
+	cmd->output = argv[argc - 1];
 	return (first);
 }

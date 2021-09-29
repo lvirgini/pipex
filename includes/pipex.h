@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/28 17:52:04 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/29 12:37:58 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,21 @@ enum	e_bool
 	FAILURE,
 };
 
+enum	e_type
+{
+	PIPE,
+	AND,
+};
+
 typedef struct s_cmd	t_cmd;
 struct s_cmd
 {
 	char	**argv;
 	char	*path;
+	char	*input;
+	char	*output;
 	int		pipe[2];
+	int		type;
 	pid_t	pid;
 	t_cmd	*next;
 	t_cmd	*prev;
