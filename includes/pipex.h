@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 12:37:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:51:20 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_cmd	*create_t_cmd(char *argv, t_cmd *prev);
 ** ARGUMENTS
 */
 
-int		make_pipex(t_cmd *cmd, char *env[], char *input, char *output);
+int		make_pipex(t_cmd *cmd, char *env[]);
 t_cmd	*get_commands_and_arguments(int argc, char *argv[]);
 int		exec_command(t_cmd *cmd, char *env[]);
 
@@ -77,9 +77,7 @@ int		exec_command(t_cmd *cmd, char *env[]);
 */
 
 int		add_path_for_all_cmd(t_cmd *cmd, char *env[]);
-int		set_up_input(int std_io[2], char *input);
-int		set_up_output(int std_io[2], char *output);
-void	set_up_io_in_fork(t_cmd *cmd, int std_io[2]);
+void	set_up_io_in_fork(t_cmd *cmd);
 
 /*
 ** ERRORS

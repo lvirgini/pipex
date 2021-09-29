@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/27 15:21:14 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/29 17:07:23 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@
 # ----------------- #
 
 NAME =		pipex
+
+NAME_BONUS = pipex_bonus
 
 OBJ_DIR =	obj/
 INC_DIR = 	includes/
@@ -27,13 +29,15 @@ SRC_DIR = 	srcs srcs/utils \
 			srcs/env
 
 OBJ		= $(addprefix $(OBJ_DIR), $(SRCS:%.c=%.o))
+OBJ_BONUS = $(addprefix $(OBJ_DIR), $(SRCS_BONUS:%.c=%.o))
 
 LIB		=	
 
 HEADERS =	pipex.h pipex_utils.h
 
-SRCS	=	main.c \
-			ft_memset.c \
+SRCS 		= 	$(SRC_COMMUN) main.c
+SRCS_BONUS	= 	$(SRC_COMMUN) main_bonus.c
+SRC_COMMUN	=	ft_memset.c \
 			ft_strlen.c \
 			ft_strlcat.c \
 			ft_strncpy.c \
@@ -59,7 +63,7 @@ vpath %.h $(foreach dir, $(INC_DIR), $(dir):)
 # ----------------- #
 
 CC = 			gcc
-CFLAG =			-Wall -Wextra -g
+CFLAG =			-Wall -Wextra -Werror
 IFLAG = 		$(foreach dir, $(INC_DIR), -I $(dir))
 LFLAG =			$(foreach lib, $(LIB), -l $(lib) )
 
@@ -79,6 +83,13 @@ $(NAME)	:	$(OBJ) $(INC_DIR)
 			@echo "\n\t\033[036;1m*.............................*\033[0m\n"
 	
 all		:	${NAME}
+
+bonus : 	$(OBJ_BONUS) $(INC_DIR)
+			@$(CC) $(CFLAG) $(IFLAG) $(OBJ_BONUS) -o $(NAME_BONUS) $(LFLAG)
+			@echo "\n\t\033[36;1m*.............................*"
+			@echo "\n\t*     Compilation $(NAME_BONUS)       *\t   \033[32;1m--------->>> \033[4;5mComplete\033[0m"
+			@echo "\n\t\033[036;1m*.............................*\033[0m\n"
+	
 
 leaks	:	$(OBJ) $(INC_DIR)
 			@$(CC) $(CFLAG) - $(IFLAG) $(OBJ) -o $(NAME) $(LFLAG)
@@ -103,7 +114,7 @@ clean:
 			@echo "\033[36;1m ------>>  clean\033[0m"
 
 fclean:		clean
-			@rm -f $(NAME)
+			@rm -f $(NAME) $(NAME_BONUS)
 			@echo "\033[36;1m ------>> fclean\033[0m"
 
 re:			fclean all
