@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 22:17:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 16:51:46 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/29 17:27:17 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ pid_t	creating_process(t_cmd *cmd, char *env[])
 	return (pid);
 }
 
-void	close_pipe(int	pipe[2])
+void	close_pipe(int pipe[2])
 {
 	close(pipe[IN]);
 	close(pipe[OUT]);
@@ -73,6 +73,7 @@ void	wait_all_process(t_cmd *cmd)
 		cmd = cmd->next;
 	}
 }
+
 int	make_pipex(t_cmd *cmd, char *env[])
 {
 	execute_all_cmd(cmd, env);

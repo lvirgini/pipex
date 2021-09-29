@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 18:59:50 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 16:55:06 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/29 17:26:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,15 @@ static void	set_up_input(t_cmd *cmd, char *input)
 	else if (dup2(fd, 0) == -1)
 		perror("dup2 set up input");
 	else
-		return ;			
+		return ;
 	close(cmd->pipe[OUT]);
 	exit(EXIT_FAILURE);
-
 }
 
 static void	set_up_output(t_cmd *cmd, char *output)
 {
 	int		fd;
-	
+
 	fd = open(output, O_CREAT | O_TRUNC | O_WRONLY,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
@@ -62,7 +61,6 @@ static void	set_up_output(t_cmd *cmd, char *output)
 
 void	set_up_io_in_fork(t_cmd *cmd)
 {
-	//dprintf(2, "%s : input = %d\n",cmd->path, cmd->prev->pipe[IN]);
 	if (cmd->input)
 		set_up_input(cmd, cmd->input);
 	else if (cmd->prev && cmd->prev->type == PIPE)
@@ -85,6 +83,4 @@ void	set_up_io_in_fork(t_cmd *cmd)
 		}
 		close(cmd->pipe[IN]);
 	}
-	//	dprintf(2, "%s : output = %d pipe input = %d\n",cmd->path, cmd->pipe[OUT], cmd->pipe[IN]);
 }
-

@@ -6,15 +6,14 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 16:51:20 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/29 17:28:14 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <stdio.h> //
-# include <sys/wait.h> //
+# include <stdio.h> 
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
