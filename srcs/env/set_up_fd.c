@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 18:59:50 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/28 17:51:35 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/29 16:55:06 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,36 @@
 ** if open can't create outfile : rdisplay error and exit.
 */
 
-int	set_up_input(int std_io[2], char *input)
+static void	set_up_input(t_cmd *cmd, char *input)
 {
-	std_io[IN] = open(input, O_RDONLY | O_CLOEXEC);
-	if (std_io[IN] == -1)
-	{
+	int	fd;
+
+	fd = open(input, O_RDONLY | O_CLOEXEC);
+	if (fd == -1)
 		perror(input);
-		return (FAILURE);
-	}
-	return (SUCCESS);
+	else if (dup2(fd, 0) == -1)
+		perror("dup2 set up input");
+	else
+		return ;			
+	close(cmd->pipe[OUT]);
+	exit(EXIT_FAILURE);
+
 }
 
-int	set_up_output(int std_io[2], char *output)
+static void	set_up_output(t_cmd *cmd, char *output)
 {
-	std_io[OUT] = open(output, O_CREAT | O_TRUNC | O_WRONLY,
+	int		fd;
+	
+	fd = open(output, O_CREAT | O_TRUNC | O_WRONLY,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (std_io[OUT] == -1)
+	if (fd == -1)
 		perror(output);
-	else if (dup2(std_io[OUT], 1) == -1)
+	else if (dup2(fd, 1) == -1)
 		perror("dup2 set up output");
 	else
-		return (SUCCESS);
-	return (FAILURE);
+		return ;
+	close(cmd->pipe[OUT]);
+	exit(EXIT_FAILURE);
 }
 
 /*
@@ -52,31 +60,31 @@ int	set_up_output(int std_io[2], char *output)
 ** else make cmd pipe output to output
 */
 
-void	set_up_io_in_fork(t_cmd *cmd, int std_io[2])
+void	set_up_io_in_fork(t_cmd *cmd)
 {
-	dprintf(2, "%s : input = %d\n",cmd->path, cmd->prev->pipe[IN]);
-	if (cmd->prev)
+	//dprintf(2, "%s : input = %d\n",cmd->path, cmd->prev->pipe[IN]);
+	if (cmd->input)
+		set_up_input(cmd, cmd->input);
+	else if (cmd->prev && cmd->prev->type == PIPE)
 	{
 		if (dup2(cmd->prev->pipe[IN], 0) == -1)
 		{
-			perror ("dup2");
+			perror ("dup2 set_up_io_in_fork: input");
+			close (cmd->pipe[OUT]);
 			exit(EXIT_FAILURE);
 		}
 	}
-	else if (dup2(std_io[IN], 0) == -1)
-	{
-		perror ("dup2");
-		exit(EXIT_FAILURE);
-	}
-	if (cmd->next)
+	if (cmd->output)
+		set_up_output(cmd, cmd->output);
+	else if (cmd->type == PIPE)
 	{
 		if (dup2(cmd->pipe[OUT], 1) == -1)
 		{
-			perror ("dup2");
+			perror ("dup2 set_up_io_in_fork: output");
 			exit(EXIT_FAILURE);
 		}
 		close(cmd->pipe[IN]);
+	}
 	//	dprintf(2, "%s : output = %d pipe input = %d\n",cmd->path, cmd->pipe[OUT], cmd->pipe[IN]);
-	}	
-
 }
+
