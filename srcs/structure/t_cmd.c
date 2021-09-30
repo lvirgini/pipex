@@ -6,11 +6,15 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 00:09:08 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 12:39:17 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/30 21:01:13 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+/*
+** free of char *s[]
+*/
 
 void	free_double_table(char **s)
 {
@@ -23,7 +27,7 @@ void	free_double_table(char **s)
 }
 
 /*
-** Free all t_cmd
+** Free all t_cmd and inside
 */
 
 void	free_t_cmd(t_cmd *cmd)

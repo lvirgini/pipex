@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 13:20:34 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/30 21:04:45 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <errno.h>
-# include <string.h>
 # include "pipex_utils.h"
 
 enum	e_stdio
@@ -50,7 +49,6 @@ struct s_cmd
 	char	*input;
 	char	*output;
 	int		pipe[2];
-	int		type;
 	pid_t	pid;
 	t_cmd	*next;
 	t_cmd	*prev;
@@ -70,14 +68,15 @@ t_cmd	*create_t_cmd(char *argv, t_cmd *prev);
 
 int		make_pipex(t_cmd *cmd, char *env[]);
 t_cmd	*get_commands_and_arguments(int argc, char *argv[]);
-int		exec_command(t_cmd *cmd, char *env[]);
+int		execve_this_command(t_cmd *cmd, char *env[]);
+int		exec_all_commands(t_cmd *cmd, char *env[]);
 
 /*
 ** ENVIRONNEMENT | PATHS
 */
 
 int		add_path_for_all_cmd(t_cmd *cmd, char *env[]);
-void	set_up_io_in_fork(t_cmd *cmd);
+int		set_up_io_in_fork(t_cmd *cmd);
 
 /*
 ** ERRORS

@@ -6,13 +6,13 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 14:53:58 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 17:26:34 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/30 20:44:47 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	exec_command(t_cmd *cmd, char *env[])
+int	execve_this_command(t_cmd *cmd, char *env[])
 {
 	int		ret;
 

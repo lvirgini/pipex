@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 16:17:09 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/30 20:44:15 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ should do the same as the next shell command:\n< infile cmd1 | cmd2 > \
 outfile.\n./pipex infile cmd1 cmd2 outfile\n\n";
 
 	write(2, usage, ft_strlen(usage));
-	errno = 126;
+	errno = 22;
 	return (errno);
 }
 
@@ -54,7 +54,7 @@ int	main(int argc, char *argv[], char *env[])
 	if (!cmd)
 		return (errno);
 	add_path_for_all_cmd(cmd, env);
-	ret = make_pipex(cmd, env);
+	ret = exec_all_commands(cmd, env);
 	free_and_return(cmd);
 	return (ret);
 }
