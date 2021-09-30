@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/29 17:07:23 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/09/30 16:24:06 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ vpath %.h $(foreach dir, $(INC_DIR), $(dir):)
 # ----------------- #
 
 CC = 			gcc
-CFLAG =			-Wall -Wextra -Werror
+CFLAG =			-Wall -Wextra -Werror -fsanitize=leak
 IFLAG = 		$(foreach dir, $(INC_DIR), -I $(dir))
 LFLAG =			$(foreach lib, $(LIB), -l $(lib) )
 

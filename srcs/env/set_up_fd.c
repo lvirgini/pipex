@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 18:59:50 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 17:26:09 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:19:37 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	set_up_input(t_cmd *cmd, char *input)
 	else
 		return ;
 	close(cmd->pipe[OUT]);
-	exit(EXIT_FAILURE);
+	exit(errno);
 }
 
 static void	set_up_output(t_cmd *cmd, char *output)
@@ -48,7 +48,7 @@ static void	set_up_output(t_cmd *cmd, char *output)
 	else
 		return ;
 	close(cmd->pipe[OUT]);
-	exit(EXIT_FAILURE);
+	exit(errno);
 }
 
 /*

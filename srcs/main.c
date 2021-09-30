@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/29 16:51:58 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/30 16:17:09 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ static int	print_usage(void)
 should do the same as the next shell command:\n< infile cmd1 | cmd2 > \
 outfile.\n./pipex infile cmd1 cmd2 outfile\n\n";
 
-	write(1, usage, ft_strlen(usage));
-	return (-1);
+	write(2, usage, ft_strlen(usage));
+	errno = 126;
+	return (errno);
 }
 
 /*
