@@ -6,15 +6,17 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:34:17 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/28 16:42:25 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/09/30 21:19:01 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /*
-** getenv = get line in env with key
+** getenv : like getenv
+**	return line corresponding to the key from env without key.
 */
+
 char	*get_env(char *env[], char	*key)
 {
 	size_t	i;
@@ -27,7 +29,7 @@ char	*get_env(char *env[], char	*key)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], key, len) == 0)
-			return (env[i]);
+			return (env[i] + len);
 		i++;
 	}
 	return (NULL);
@@ -62,12 +64,20 @@ static char	*get_absolute_path(char *path)
 	return (NULL);
 }
 
+/*
+** path of command is needed for execve
+** 	if '/' is before cmd : bash don't check and take it like a path.
+** 	'/' is needed between path and command.
+** 		ex: PATH=/bin  cmd=ls : test if /bin/ls
+** 	search executable with access checking all path
+*/
+
 char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 {
 	size_t	i;
 	char	*slash_cmd;
 
-	if (cmd->argv[0][0] == '/')
+	if (cmd->argv[0] && cmd->argv[0][0] == '/')
 		return (get_absolute_path(cmd->argv[0]));
 	slash_cmd = ft_strjoin("/", cmd->argv[0]);
 	if (!slash_cmd)
@@ -92,6 +102,7 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 }
 
 /*
+** get the a plit of 'PATH=' env
 ** add path to all cmd
 */
 
