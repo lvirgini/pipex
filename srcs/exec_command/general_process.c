@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 22:17:28 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 20:58:39 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/10/01 18:41:00 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ pid_t	create_child_process(t_cmd *cmd, char *env[])
 		if (is_command_executable(cmd) == FAILURE)
 			exit(free_and_return(cmd));
 		execve_this_command(cmd, env);
-		free_and_return(cmd);
-		exit(errno);
 	}
 	return (pid);
 }
@@ -87,17 +85,12 @@ int	wait_all_process(t_cmd *cmd)
 	{
 		last_status = 0;
 		waitpid(cmd->pid, &last_status, 0);
+		if (cmd->prev)
+			close(cmd->prev->pipe[IN]);
 		close_pipe(cmd->pipe);
 		cmd = cmd->next;
 	}
-	/*(void)cmd;
-	waitpid(-1, &last_status, WUNTRACED);*/
-	errno = WEXITSTATUS(last_status);
-	return (last_status);
-	//if (last_status == 0)
-	//	return (0);
-	//dprintf(2, "%d %d\n", last_status,WEXITSTATUS(last_status));
-	return (errno);
+	return (WEXITSTATUS(last_status));
 }
 
 /*
@@ -108,6 +101,9 @@ int	wait_all_process(t_cmd *cmd)
 
 int	exec_all_commands(t_cmd *cmd, char *env[])
 {
+	t_cmd	*first;
+
+	first = cmd;
 	while (cmd)
 	{
 		if (cmd->next && pipe(cmd->pipe) == -1)
@@ -120,5 +116,5 @@ int	exec_all_commands(t_cmd *cmd, char *env[])
 			close(cmd->pipe[OUT]);
 		cmd = cmd->next;
 	}
-	return (wait_all_process(cmd));
+	return (wait_all_process(first));
 }
