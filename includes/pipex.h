@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:07:15 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 21:04:45 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/10/02 12:17:08 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <fcntl.h>
 # include <errno.h>
 # include "pipex_utils.h"
+# include "pipex_structure.h"
+# include "pipex_error.h"
 
 enum	e_stdio
 {
@@ -35,41 +37,14 @@ enum	e_bool
 	FAILURE,
 };
 
-enum	e_type
-{
-	PIPE,
-	AND,
-};
-
-typedef struct s_cmd	t_cmd;
-struct s_cmd
-{
-	char	**argv;
-	char	*path;
-	char	*input;
-	char	*output;
-	int		pipe[2];
-	pid_t	pid;
-	t_cmd	*next;
-	t_cmd	*prev;
-};
-
-/*
-** STRUCTURES
-*/
-
-void	free_t_cmd(t_cmd *cmd);
-t_cmd	*malloc_t_cmd(void);
-t_cmd	*create_t_cmd(char *argv, t_cmd *prev);
-
 /*
 ** ARGUMENTS
 */
 
-int		make_pipex(t_cmd *cmd, char *env[]);
 t_cmd	*get_commands_and_arguments(int argc, char *argv[]);
-int		execve_this_command(t_cmd *cmd, char *env[]);
+int		make_pipex(t_cmd *cmd, char *env[]);
 int		exec_all_commands(t_cmd *cmd, char *env[]);
+int		execve_this_command(t_cmd *cmd, char *env[]);
 
 /*
 ** ENVIRONNEMENT | PATHS
@@ -77,11 +52,6 @@ int		exec_all_commands(t_cmd *cmd, char *env[]);
 
 int		add_path_for_all_cmd(t_cmd *cmd, char *env[]);
 int		set_up_io_in_fork(t_cmd *cmd);
-
-/*
-** ERRORS
-*/
-
-int		free_and_return(t_cmd *cmd);
+void	close_pipe(int pipe[2]);
 
 #endif

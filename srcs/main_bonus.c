@@ -6,22 +6,22 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 21:50:27 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/10/02 10:52:41 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 /*
-** PIPEX
+** PIPEX BONUS
 **
 ** usage : 
-**	./pipex infile cmd1 cmd2 outfile
+**	./pipex infile cmd1 cmd2  ... cmd_last outfile
 **	argv[0] = ./pipex
 **	argv[1] = infile
 **	argv[2] = cmd1
 **		....
-**	argv[argc - 1] = cmd last
+**	argv[argc - 1] = cmd_last
 **	argv[argc] = outfile
 */
 
@@ -29,7 +29,7 @@ static int	print_usage(void)
 {
 	static char	*usage = "pipex usage :\n\nThe execution of the pipex program \
 should do the same as the next shell command:\n< infile cmd1 | cmd2 |cmd 3 | ...\
-| cmd last > outfile.\n./pipex infile cmd1 cmd2 cmd 3 ... cmd last outfile\n\n";
+| cmd last > outfile.\n./pipex infile cmd1 cmd2 cmd 3 ... \"cmd last\" outfile\n\n";
 
 	write(1, usage, ft_strlen(usage));
 	return (-1);

@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 11:34:17 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 21:19:01 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/10/02 12:13:18 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,8 @@ char	**split_env(char *env)
 }
 
 /*
-** Find path for the command program
-** if absolute path return it
-** else add '/' to cmd and test all path.
-*/
-
-static char	*get_absolute_path(char *path)
-{
-	if (access(path, X_OK) == 0)
-		return (ft_strdup(path));
-	return (NULL);
-}
-
-/*
 ** path of command is needed for execve
-** 	if '/' is before cmd : bash don't check and take it like a path.
+** 	check access in absolute path else
 ** 	'/' is needed between path and command.
 ** 		ex: PATH=/bin  cmd=ls : test if /bin/ls
 ** 	search executable with access checking all path
@@ -77,8 +64,8 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 	size_t	i;
 	char	*slash_cmd;
 
-	if (cmd->argv[0] && cmd->argv[0][0] == '/')
-		return (get_absolute_path(cmd->argv[0]));
+	if (access(cmd->argv[0], F_OK) == 0)
+		return (ft_strdup(cmd->argv[0]));
 	slash_cmd = ft_strjoin("/", cmd->argv[0]);
 	if (!slash_cmd)
 	{
@@ -89,7 +76,7 @@ char	*get_path_for_command(t_cmd *cmd, char *path_env[])
 	while (path_env[i])
 	{
 		cmd->path = ft_strjoin(path_env[i], slash_cmd);
-		if (access(cmd->path, X_OK) == 0)
+		if (access(cmd->path, F_OK) == 0)
 		{
 			free(slash_cmd);
 			return (cmd->path);

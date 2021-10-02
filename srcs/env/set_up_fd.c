@@ -6,11 +6,18 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 18:59:50 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 21:05:34 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/10/02 10:48:35 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+/*
+**	INFILE		PIPE 1			PIPE 2			PIPE 3			OUTFILE
+**	 --0	1-----------0	1-----------0	1-----------0	1-----
+**	|	CD1		|		CD2		|		CD3		|		CD4		|
+**
+*/
 
 /*
 ** 	IN FORK : 
@@ -27,11 +34,13 @@ static int	set_up_input(t_cmd *cmd, char *input)
 	fd = open(input, O_RDONLY | O_CLOEXEC);
 	if (fd == -1)
 		perror(input);
-	else if (dup2(fd, 0) == -1)
+	else if (dup2(fd, IN) == -1)
 		perror("dup2 set up input");
 	else
+	{
+		close(cmd->pipe[IN]);
 		return (SUCCESS);
-	close(cmd->pipe[OUT]);
+	}
 	return (FAILURE);
 }
 
@@ -42,7 +51,7 @@ static int	set_up_input(t_cmd *cmd, char *input)
 **	display error and exit.
 */
 
-static int	set_up_output(t_cmd *cmd, char *output)
+static int	set_up_output(char *output)
 {
 	int		fd;
 
@@ -50,11 +59,10 @@ static int	set_up_output(t_cmd *cmd, char *output)
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
 		perror(output);
-	else if (dup2(fd, 1) == -1)
+	else if (dup2(fd, OUT) == -1)
 		perror("dup2 set up output");
 	else
 		return (SUCCESS);
-	close(cmd->pipe[OUT]);
 	return (FAILURE);
 }
 
@@ -66,7 +74,7 @@ static int	set_up_pipe_input(t_cmd *cmd)
 {
 	if (cmd->prev)
 	{
-		if (dup2(cmd->prev->pipe[IN], 0) == -1)
+		if (dup2(cmd->prev->pipe[IN], IN) == -1)
 		{
 			perror ("dup2 set_up_io_in_fork: input");
 			close (cmd->pipe[OUT]);
@@ -82,7 +90,7 @@ static int	set_up_pipe_input(t_cmd *cmd)
 
 static int	set_up_pipe_output(t_cmd *cmd)
 {
-	if (dup2(cmd->pipe[OUT], 1) == -1)
+	if (dup2(cmd->pipe[OUT], OUT) == -1)
 	{
 		perror ("dup2 set_up_io_in_fork: output");
 		return (FAILURE);
@@ -113,7 +121,7 @@ int	set_up_io_in_fork(t_cmd *cmd)
 	}
 	if (cmd->output)
 	{
-		if (set_up_output(cmd, cmd->output) == FAILURE)
+		if (set_up_output(cmd->output) == FAILURE)
 			return (FAILURE);
 	}	
 	else

@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   pipex_error.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 11:09:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/10/02 12:14:46 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/10/02 11:25:48 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/10/02 11:29:49 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef PIPEX_ERROR_H
+# define PIPEX_ERROR_H
 
-/*
-** Free all allocated memory in PARENT. 
-** if execve error : CHILD can free all too.
-*/
+# define NB_ERROR 2
 
-int	free_and_return(t_cmd *cmd)
+enum	e_error
 {
-	while (cmd->prev)
-		cmd = cmd->prev;
-	free_t_cmd(cmd);
-	return (errno);
-}
+	ERR_CMD_NOT_FOUND,
+	ERR_CMD_NOT_EXECUTABLE,
+};
 
-void	close_pipe(int pipe[2])
-{
-	close(pipe[IN]);
-	close(pipe[OUT]);
-}
+int		free_and_return(t_cmd *cmd);
+
+#endif

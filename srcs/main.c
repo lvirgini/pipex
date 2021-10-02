@@ -6,7 +6,7 @@
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/21 10:10:40 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/09/30 21:48:19 by lvirgini         ###   ########.fr       */
+/*   Updated: 2021/10/02 10:56:00 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,14 @@ outfile.\n./pipex infile cmd1 cmd2 outfile\n\n";
 }
 
 /*
-** CREATION T_CMD : recuperation des arguments pour chaque cmd
-**	recuperation des path pour chaque commande
-** mise en place des fd du programme principal :
+** PIPEX
 **
+**	argument must be 5 ./pipex infile cmd1 cmd2 outfile
+**	create list of commands with theirs own arguments
+**	get path for all command with env
+** 	execute all command
+** 	PARENT can free all allocated memory
+**	return the last child processus exit status
 */
 
 int	main(int argc, char *argv[], char *env[])

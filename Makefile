@@ -6,7 +6,7 @@
 #    By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/06 20:46:01 by lvirgini          #+#    #+#              #
-#    Updated: 2021/09/30 18:57:19 by lvirgini         ###   ########.fr        #
+#    Updated: 2021/10/02 11:29:30 by lvirgini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ OBJ_BONUS = $(addprefix $(OBJ_DIR), $(SRCS_BONUS:%.c=%.o))
 
 LIB		=	
 
-HEADERS =	pipex.h pipex_utils.h
+HEADERS =	pipex.h pipex_utils.h pipex_structure.h pipex_error.h
 
 SRCS 		= 	$(SRC_COMMUN) main.c
 SRCS_BONUS	= 	$(SRC_COMMUN) main_bonus.c

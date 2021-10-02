@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   pipex_structure.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lvirgini <lvirgini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/21 11:09:13 by lvirgini          #+#    #+#             */
-/*   Updated: 2021/10/02 12:14:46 by lvirgini         ###   ########.fr       */
+/*   Created: 2021/10/02 11:27:21 by lvirgini          #+#    #+#             */
+/*   Updated: 2021/10/02 11:30:53 by lvirgini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef PIPEX_STRUCTURE_H
+# define PIPEX_STRUCTURE_H
 
-/*
-** Free all allocated memory in PARENT. 
-** if execve error : CHILD can free all too.
-*/
-
-int	free_and_return(t_cmd *cmd)
+typedef struct s_cmd	t_cmd;
+struct s_cmd
 {
-	while (cmd->prev)
-		cmd = cmd->prev;
-	free_t_cmd(cmd);
-	return (errno);
-}
+	char	**argv;
+	char	*path;
+	char	*input;
+	char	*output;
+	int		pipe[2];
+	pid_t	pid;
+	t_cmd	*next;
+	t_cmd	*prev;
+};
 
-void	close_pipe(int pipe[2])
-{
-	close(pipe[IN]);
-	close(pipe[OUT]);
-}
+void	free_t_cmd(t_cmd *cmd);
+t_cmd	*malloc_t_cmd(void);
+t_cmd	*create_t_cmd(char *argv, t_cmd *prev);
+
+#endif
